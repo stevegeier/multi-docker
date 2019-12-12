@@ -3,21 +3,21 @@ services:
   - docker
 
 before_install:
-  - docker build -t twerthi/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t stevegeier/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run twerthi/react-test npm test -- --coverage
+  - docker run stevegeier/react-test npm test -- --coverage
 
-after_success: 
-  - docker build -t twerthi/multi-client ./client
-  - docker build -t twerthi/multi-nginx ./nginx
-  - docker build -t twerthi/multi-server ./server
-  - docker build -t twerthi/multi-worker ./worker
+after_success:
+  - docker build -t stevegeier/multi-client ./client
+  - docker build -t stevegeier/multi-nginx ./nginx
+  - docker build -t stevegeier/multi-server ./server
+  - docker build -t stevegeier/multi-worker ./worker
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker push twerthi/multi-client
-  - docker push twerthi/multi-nginx
-  - docker push twerthi/multi-server
-  - docker push twerthi/multi-worker
+  - docker push stevegeier/multi-client
+  - docker push stevegeier/multi-nginx
+  - docker push stevegeier/multi-server
+  - docker push stevegeier/multi-worker
 
 deploy:
   provider: elasticbeanstalk
