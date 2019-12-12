@@ -19,15 +19,15 @@ after_success:
   - docker push stevegeier/multi-server
   - docker push stevegeier/multi-worker
 
-deploy:
-  provider: elasticbeanstalk
-  region: "us-west-2"
-  app: "multi-docker"
-  env: "MultiDocker-env"
-  bucket_name: "elasticbeanstalk-us-west-2-392069123042"
-  bucket_path: "multi-docker"
-  on:
-    branch: master
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key:
-    secure: "$AWS_SECRET_KEY"
+#deploy:
+#  provider: elasticbeanstalk
+#  region: "us-west-2"
+#  app: "multi-docker"
+#  env: "MultiDocker-env"
+#  bucket_name: "elasticbeanstalk-us-west-2-392069123042"
+#  bucket_path: "multi-docker"
+#  on:
+#    branch: master
+#  access_key_id: $AWS_ACCESS_KEY
+#  secret_access_key:
+#    secure: "$AWS_SECRET_KEY"
