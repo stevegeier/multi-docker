@@ -1,0 +1,33 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t twerthi/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run twerthi/react-test npm test -- --coverage
+
+after_success: 
+  - docker build -t twerthi/multi-client ./client
+  - docker build -t twerthi/multi-nginx ./nginx
+  - docker build -t twerthi/multi-server ./server
+  - docker build -t twerthi/multi-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push twerthi/multi-client
+  - docker push twerthi/multi-nginx
+  - docker push twerthi/multi-server
+  - docker push twerthi/multi-worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-west-2"
+  app: "multi-docker"
+  env: "MultiDocker-env"
+  bucket_name: "elasticbeanstalk-us-west-2-392069123042"
+  bucket_path: "multi-docker"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY"
