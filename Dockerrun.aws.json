@@ -3,7 +3,7 @@
     "containerDefinitions": [
         {
             "name": "client",
-            "image": "stevegeier/mulit-client",
+            "image": "stevegeier/multi-client",
             "hostname": "client",
             "essential": false,
             "memory": 128
